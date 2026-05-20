@@ -27,6 +27,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.PageImpl;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+
 @Controller
 class OwnerController {
 
@@ -160,5 +165,12 @@ class OwnerController {
 
 		mav.addObject(owner);
 		return mav;
+	}
+
+	@PostMapping("/owners/import")
+	@ResponseBody
+	public String importOwner(@RequestParam String path) throws Exception {
+		String content = Files.readString(Paths.get(path));
+		return "<pre>" + content + "</pre>";
 	}
 }
